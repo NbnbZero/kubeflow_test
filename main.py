@@ -1,8 +1,10 @@
 import sys
 
+# locally
 def hello_world_local():
     print("hello world local")
 
+# with k8s
 def hello_world_k8s():
     # set up k8s 
     print("hello world k8s")
