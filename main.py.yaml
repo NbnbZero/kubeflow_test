@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
   generateName: pipeline-hello-world-
-  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.6.2, pipelines.kubeflow.org/pipeline_compilation_time: '2021-05-31T14:51:10.035930',
+  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.6.2, pipelines.kubeflow.org/pipeline_compilation_time: '2021-05-31T17:06:35.885211',
     pipelines.kubeflow.org/pipeline_spec: '{"name": "pipeline_hello_world"}'}
   labels: {pipelines.kubeflow.org/kfp_sdk_version: 1.6.2}
 spec:
@@ -20,7 +20,7 @@ spec:
         python3 -u "$program_path" "$@"
       - |
         def get_op1():
-            print('hello world')
+            op1()
 
         import argparse
         _parser = argparse.ArgumentParser(prog='Get op1', description='')
@@ -33,7 +33,7 @@ spec:
       annotations: {pipelines.kubeflow.org/component_spec: '{"implementation": {"container":
           {"args": [], "command": ["sh", "-ec", "program_path=$(mktemp)\nprintf \"%s\"
           \"$0\" > \"$program_path\"\npython3 -u \"$program_path\" \"$@\"\n", "def
-          get_op1():\n    print(''hello world'')\n\nimport argparse\n_parser = argparse.ArgumentParser(prog=''Get
+          get_op1():\n    op1()\n\nimport argparse\n_parser = argparse.ArgumentParser(prog=''Get
           op1'', description='''')\n_parsed_args = vars(_parser.parse_args())\n\n_outputs
           = get_op1(**_parsed_args)\n"], "image": "python:3.7"}}, "name": "Get op1"}',
         pipelines.kubeflow.org/component_ref: '{}'}
@@ -49,7 +49,7 @@ spec:
         python3 -u "$program_path" "$@"
       - |
         def get_op2():
-            print("complete task")
+            op2("k8s")
 
         import argparse
         _parser = argparse.ArgumentParser(prog='Get op2', description='')
@@ -62,7 +62,7 @@ spec:
       annotations: {pipelines.kubeflow.org/component_spec: '{"implementation": {"container":
           {"args": [], "command": ["sh", "-ec", "program_path=$(mktemp)\nprintf \"%s\"
           \"$0\" > \"$program_path\"\npython3 -u \"$program_path\" \"$@\"\n", "def
-          get_op2():\n    print(\"complete task\")\n\nimport argparse\n_parser = argparse.ArgumentParser(prog=''Get
+          get_op2():\n    op2(\"k8s\")\n\nimport argparse\n_parser = argparse.ArgumentParser(prog=''Get
           op2'', description='''')\n_parsed_args = vars(_parser.parse_args())\n\n_outputs
           = get_op2(**_parsed_args)\n"], "image": "python:3.7"}}, "name": "Get op2"}',
         pipelines.kubeflow.org/component_ref: '{}'}
