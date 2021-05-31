@@ -1,24 +1,26 @@
 import sys
+import kfp
+from kfp import components, dsl
+
+
+@dsl.component
+def get_op1():
+    print('hello world')
+
+
+@components.create_component_from_func
+def get_op2():
+    print("complete task")
+
 
 # locally
 def hello_world_local():
-    print("hello world local")
-    print('complete task')
+    get_op1()
+    get_op2()
+
 
 # with k8s
 def hello_world_k8s():
-    # set up k8s
-    import kfp
-    from kfp import components, dsl
-
-    @components.create_component_from_func
-    def get_op1():
-        print('hello world k8s')
-
-    @components.create_component_from_func
-    def get_op2():
-        print("complete task")
-
     @dsl.pipeline(name='pipeline_hello_world')
     def my_pipeline():
         task1 = get_op1()
@@ -27,8 +29,10 @@ def hello_world_k8s():
 
     kfp.compiler.Compiler().compile(my_pipeline, __file__ + '.yaml')
 
+
 if __name__ == '__main__':
-    if sys.argv[1] == "local":
-        hello_world_local()
-    elif sys.argv[1] == "k8s":
+    device = sys.argv[1]
+    if device == "k8s":
         hello_world_k8s()
+    elif device == "local":
+        hello_world_local()
