@@ -1,16 +1,10 @@
-# This is a sample Python script.
+import sys
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print('?')  # Press ⌘F8 to toggle the breakpoint.
+def hello_world_local():
+    print("hello world local")
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    if len(sys.argv)<2:
+        hello_world_local()
+    # elif sys.argv[1] == "k8s":
