@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
   generateName: pipeline-hello-world-
-  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.6.2, pipelines.kubeflow.org/pipeline_compilation_time: '2021-05-31T14:51:10.035930',
+  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.6.2, pipelines.kubeflow.org/pipeline_compilation_time: '2021-05-31T16:58:01.078423',
     pipelines.kubeflow.org/pipeline_spec: '{"name": "pipeline_hello_world"}'}
   labels: {pipelines.kubeflow.org/kfp_sdk_version: 1.6.2}
 spec:
