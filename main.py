@@ -1,8 +1,4 @@
 import sys
-import kfp
-from kfp import dsl
-from kfp.components import create_component_from_func
-from kfp.v2 import dsl
 
 
 def get_op1():
@@ -21,6 +17,9 @@ def hello_world_local():
 
 # with k8s
 def hello_world_k8s():
+    import kfp
+    from kfp import dsl
+    from kfp.components import create_component_from_func
 
     @dsl.pipeline(name='pipeline_hello_world')
     def my_pipeline():
