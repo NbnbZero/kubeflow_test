@@ -1,5 +1,3 @@
-# 
-
 import sys
 from new_decorator import my_decorator
 
@@ -19,5 +17,3 @@ def op2(dev):
 
 if __name__ == '__main__':
     op1()
-    
- 
