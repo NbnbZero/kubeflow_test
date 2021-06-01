@@ -11,6 +11,7 @@ else:
 @my_decorator(device = dev)
 def op1():
     print("hello world")
+    print(op1.__name__)
 
 def op2(dev):
     print("complete " + dev + " task")
