@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
   generateName: pipeline-hello-world-
-  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.6.2, pipelines.kubeflow.org/pipeline_compilation_time: '2021-06-01T10:55:10.073666',
+  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.6.2, pipelines.kubeflow.org/pipeline_compilation_time: '2021-06-01T17:56:28.751788',
     pipelines.kubeflow.org/pipeline_spec: '{"name": "pipeline_hello_world"}'}
   labels: {pipelines.kubeflow.org/kfp_sdk_version: 1.6.2}
 spec:
@@ -36,10 +36,41 @@ spec:
           op1():\n    print(\"hello world\")\n\nimport argparse\n_parser = argparse.ArgumentParser(prog=''Op1'',
           description='''')\n_parsed_args = vars(_parser.parse_args())\n\n_outputs
           = op1(**_parsed_args)\n"], "image": "python:3.7"}}, "name": "Op1"}', pipelines.kubeflow.org/component_ref: '{}'}
+  - name: op2
+    container:
+      args: []
+      command:
+      - sh
+      - -ec
+      - |
+        program_path=$(mktemp)
+        printf "%s" "$0" > "$program_path"
+        python3 -u "$program_path" "$@"
+      - |
+        def op2():
+            print("complete task")
+
+        import argparse
+        _parser = argparse.ArgumentParser(prog='Op2', description='')
+        _parsed_args = vars(_parser.parse_args())
+
+        _outputs = op2(**_parsed_args)
+      image: python:3.7
+    metadata:
+      labels: {pipelines.kubeflow.org/kfp_sdk_version: 1.6.2, pipelines.kubeflow.org/pipeline-sdk-type: kfp}
+      annotations: {pipelines.kubeflow.org/component_spec: '{"implementation": {"container":
+          {"args": [], "command": ["sh", "-ec", "program_path=$(mktemp)\nprintf \"%s\"
+          \"$0\" > \"$program_path\"\npython3 -u \"$program_path\" \"$@\"\n", "def
+          op2():\n    print(\"complete task\")\n\nimport argparse\n_parser = argparse.ArgumentParser(prog=''Op2'',
+          description='''')\n_parsed_args = vars(_parser.parse_args())\n\n_outputs
+          = op2(**_parsed_args)\n"], "image": "python:3.7"}}, "name": "Op2"}', pipelines.kubeflow.org/component_ref: '{}'}
   - name: pipeline-hello-world
     dag:
       tasks:
       - {name: op1, template: op1}
+      - name: op2
+        template: op2
+        dependencies: [op1]
   arguments:
     parameters: []
   serviceAccountName: pipeline-runner

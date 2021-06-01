@@ -8,13 +8,16 @@ else:
     dev = sys.argv[1]
 # dev = "k8s"
 
-@my_decorator(device = dev)
+flist = []
+
+@my_decorator(device = dev, funcs = flist, flag = 0)
 def op1():
     print("hello world")
-    print(op1.__name__)
 
-def op2(dev):
-    print("complete " + dev + " task")
+@my_decorator(device = dev, funcs = flist, flag = 1)
+def op2():
+    print("complete task")
 
 if __name__ == '__main__':
     op1()
+    op2(dev)
