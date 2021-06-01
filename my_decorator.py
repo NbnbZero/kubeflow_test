@@ -46,7 +46,8 @@ def helper(func):
     def wrapper(*args, **kwargs):
         device = sys.argv[1]
         if device == "k8s":
-            return hello_world_k8s(*args, **kwargs)
+            hello_world_k8s(*args, **kwargs)
         elif device == "local":
-            return hello_world_local()
+            hello_world_local()
+        return func(*args, **kwargs)
     return wrapper
