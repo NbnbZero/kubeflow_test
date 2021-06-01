@@ -3,24 +3,32 @@ import kfp
 from kfp import components, dsl
 
 
-@dsl.component
+# @dsl.component
 def get_op1():
     print('hello world')
 
 
-@components.create_component_from_func
-def get_op2():
-    print("complete task")
+# @components.create_component_from_func
+def get_op2(device):
+    print("complete" + device + "task")
 
 
 # locally
 def hello_world_local():
     get_op1()
-    get_op2()
+    get_op2("local")
 
 
 # with k8s
 def hello_world_k8s():
+    
+    @components.create_component_from_func
+    def get_op1():
+        op1()
+
+    @components.create_component_from_func
+    def get_op2():
+        op2("k8s")
     @dsl.pipeline(name='pipeline_hello_world')
     def my_pipeline():
         task1 = get_op1()
